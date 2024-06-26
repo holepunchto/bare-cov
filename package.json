@@ -1,0 +1,25 @@
+{
+  "name": "bare-cov",
+  "version": "1.0.0",
+  "description": "Generate coverage reports using Bare and Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/bare-cov.git"
+  },
+  "keywords": [
+    "bare",
+    "coverage",
+    "node",
+    "pear"
+  ],
+  "author": "Holepunch",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holepunchto/bare-cov/issues"
+  },
+  "homepage": "https://github.com/holepunchto/bare-cov#readme"
+}
