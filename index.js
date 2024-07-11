@@ -16,7 +16,7 @@ module.exports = async function setupCoverage (opts) {
     session.disconnect()
 
     const transformer = new Transformer(opts)
-    const coverageMap = await transformer.transformToCoverageMap([v8Report])
+    const coverageMap = await transformer.transformToCoverageMap(v8Report)
     transformer.report(coverageMap)
   })
 }
