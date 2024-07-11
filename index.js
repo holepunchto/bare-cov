@@ -1,8 +1,10 @@
 const { Session } = require('node:inspector')
 const { promisify } = require('util')
+const fs = require('fs')
+const path = require('path')
 const Transformer = require('./lib/transformer')
 
-module.exports = async function setupCoverage (opts) {
+module.exports = async function setupCoverage (opts = {}) {
   const session = new Session()
   session.connect()
 
@@ -14,6 +16,10 @@ module.exports = async function setupCoverage (opts) {
   process.once('beforeExit', async () => {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
     session.disconnect()
+
+    const reportsDirectory = opts.reportsDirectory ?? 'coverage'
+    if (!fs.existsSync(reportsDirectory)) fs.mkdirSync(reportsDirectory, { recursive: true })
+    fs.writeFileSync(path.join(reportsDirectory, `v8-coverage-${process.pid}-${new Date().getTime()}.json`), JSON.stringify(v8Report))
 
     const transformer = new Transformer(opts)
     const coverageMap = await transformer.transformToCoverageMap(v8Report)
