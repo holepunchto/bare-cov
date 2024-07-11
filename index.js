@@ -34,6 +34,7 @@ async function main (args) {
 
   const reports = fs.readdirSync(tmpDir).map(file => path.join(tmpDir, file))
     .map(file => JSON.parse(fs.readFileSync(file, 'utf8')))
+    .filter(v8Report => Array.isArray(v8Report?.result))
 
   const transformer = new Transformer({
     includeRelative: args.flags.includeRelative,
