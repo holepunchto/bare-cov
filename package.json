@@ -35,5 +35,9 @@
   },
   "devDependencies": {
     "standard": "^17.1.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ]
 }
