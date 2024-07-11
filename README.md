@@ -8,20 +8,19 @@ npm i bare-cov
 
 ### Usage
 ```js
+// Record coverage until current process ends and then generate reports
 require('bare-cov')(options)
 ```
 
-Will start recording coverage until the application ends.
-The coverage report will be generated and displayed in the console.
-
 ### Options
-#### reporter
-Coverage reporter(s) to use as a comma-separated string (default: `text`)
+#### reporters
+Coverage reporter(s) to use (default: `['text', 'json']`)
 
 #### reporterOptions
-Options to pass to each reporter as JSON object string (default: `{}`)
+Options to pass to each reporter keyed by reporter (default: `{}`)
 
-*WARNING: This directory will be deleted before running the command unless --skip-cleanup is specified*
+#### reportsDirectory
+Directory to write coverage reports to (default: `coverage`)
 
 #### skipFull
 Hide files with 100% coverage (default: `false`)
@@ -30,13 +29,13 @@ Hide files with 100% coverage (default: `false`)
 Include scripts with relative paths in coverage report (default: `false`)
 
 #### include
-Specific files that should be covered as a JSON array string (default: `[]`)
+Specific files that should be covered (default: `[]`)
 
 #### exclude
-Specific files and directories that should be excluded from coverage as a JSON array string (default: [link](https://github.com/istanbuljs/schema/blob/master/default-exclude.js))
+Specific files and directories that should be excluded from coverage (default: [link](https://github.com/istanbuljs/schema/blob/master/default-exclude.js))
 
 #### extension
-Specific file extensions that should be covered as a JSON array string (default: [link](https://github.com/istanbuljs/schema/blob/master/default-extension.js))
+Specific file extensions that should be covered (default: [link](https://github.com/istanbuljs/schema/blob/master/default-extension.js))
 
 #### allowExternal
 Allow reporting on files outside of the current working directory (default: `false`)
