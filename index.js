@@ -15,7 +15,7 @@ async function main (args) {
 
   const tmpDir = path.resolve(args.flags.tempDir ?? './coverage/tmp')
 
-  if (fs.existsSync(tmpDir)) {
+  if (args.flags.skipCleanup === false && fs.existsSync(tmpDir)) {
     fs.rmdirSync(tmpDir, { recursive: true })
   }
 
