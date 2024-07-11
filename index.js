@@ -16,6 +16,10 @@ function parseOrThrow (value, error) {
 }
 
 async function main (args) {
+  const exclude = args.flags.exclude && parseOrThrow(args.flags.exclude, 'Exclude option must be valid JSON')
+  const include = args.flags.include && parseOrThrow(args.flags.include, 'Include option must be valid JSON')
+  const extension = args.flags.extension && parseOrThrow(args.flags.extension, 'Extension must be valid JSON')
+
   if (args.positionals.length < 1) {
     console.error('Script path not specified')
     process.exit(0)
@@ -51,9 +55,9 @@ async function main (args) {
     reporters: args.flags.reporter?.split(','),
     reporterOptions: args.flags.reporterOptions,
     skipFull: args.flags.skipFull,
-    exclude: args.flags.exclude && parseOrThrow(args.flags.exclude, 'Exclude option must be valid JSON'),
-    include: args.flags.include && parseOrThrow(args.flags.include, 'Include option must be valid JSON'),
-    extension: args.flags.extension && parseOrThrow(args.flags.extension, 'Extension must be valid JSON'),
+    exclude,
+    include,
+    extension,
     allowExternal: args.flags.allowExternal,
     includeNodeModules: args.flags.includeNodeModules
   })
