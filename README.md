@@ -38,6 +38,8 @@ WARNING: This directory will be deleted before running the command
 #### temp-dir
 Directory where raw v8 coverage reports will be saved (default: `./{reportsDir}/tmp`)
 
+*WARNING: This directory will be deleted before running the command*
+
 #### skip-full
 Hide files with 100% coverage (default: `false`)
 
