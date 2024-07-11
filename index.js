@@ -2,9 +2,11 @@ const { Session } = require('node:inspector')
 const path = require('path')
 const Module = require('module')
 const { promisify } = require('util')
+const { command } = require('paparam')
 const Transformer = require('./lib/transformer')
+const definition = require('./lib/definition')
 
-async function main () {
+async function main (args) {
   const session = new Session()
   session.connect()
 
@@ -13,18 +15,27 @@ async function main () {
   await sessionPost('Profiler.enable')
   await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
 
-  if (process.argv.length <= 1) {
+  if (args.positionals.length < 1) {
     console.error('Script path not specified')
     process.exit(0)
   }
 
-  const script = path.resolve(process.argv[2])
+  const script = path.resolve(args.positionals[0])
+  process.argv = [process.argv[0], script, ...args.rest]
   Module.runMain(script)
 
   process.once('beforeExit', async () => {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
 
-    const transformer = new Transformer()
+    const transformer = new Transformer({
+      omitRelative: !args.flags.includeRelative,
+      exclude: args.flags.exclude,
+      reportsDirectory: args.flags.reportsDir,
+      watermarks: args.flags.watermarks,
+      reporters: args.flags.reporter?.split(','),
+      reporterOptions: args.flags.reporterOptions,
+      skipFull: args.flags.skipFull
+    })
     const coverageMap = await transformer.transformToCoverageMap([v8Report])
     transformer.report(coverageMap)
 
@@ -34,7 +45,4 @@ async function main () {
   })
 }
 
-main().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+command('run', ...definition, main).parse(process.argv.slice(2))
