@@ -28,7 +28,7 @@ async function main (args) {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
 
     const transformer = new Transformer({
-      omitRelative: !args.flags.includeRelative,
+      includeRelative: args.flags.includeRelative,
       exclude: args.flags.exclude,
       reportsDirectory: args.flags.reportsDir,
       watermarks: args.flags.watermarks,
