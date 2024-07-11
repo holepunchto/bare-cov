@@ -15,7 +15,7 @@ module.exports = async function setupCoverage (opts) {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
     session.disconnect()
 
-    const transformer = new Transformer({ reporters: ['json', 'text'], opts })
+    const transformer = new Transformer(opts)
     const coverageMap = await transformer.transformToCoverageMap([v8Report])
     transformer.report(coverageMap)
   })
