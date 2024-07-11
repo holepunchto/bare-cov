@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "repository": {
     "type": "git",
@@ -31,5 +31,8 @@
     "istanbul-reports": "^3.1.7",
     "test-exclude": "^7.0.1",
     "v8-to-istanbul": "^9.3.0"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
   }
 }
