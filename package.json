@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Generate coverage reports using Bare and Node.js",
   "main": "index.js",
-  "bin": "index.js",
+  "bin": "bin/index.js",
   "scripts": {
     "test": "standard"
   },
@@ -39,6 +39,7 @@
   },
   "files": [
     "index.js",
-    "lib"
+    "lib",
+    "bin"
   ]
 }

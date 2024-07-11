@@ -4,8 +4,8 @@ const { spawn } = require('child_process')
 const { command } = require('paparam')
 const path = require('path')
 const fs = require('fs')
-const Transformer = require('./lib/transformer')
-const definition = require('./lib/definition')
+const { Transformer } = require('../index')
+const definition = require('./definition')
 
 function parseOrThrow (value, error) {
   try {
