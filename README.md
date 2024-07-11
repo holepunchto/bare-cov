@@ -3,47 +3,30 @@ Run tests with coverage
 
 ### Installation
 ```
-npm i -g bare-cov
+npm i bare-cov
 ```
 
 ### Usage
-```sh
-# See help
-bare-cov --help
-
-# Run tests with coverage
-bare-cov npm test
-
-# Run tests with options
-bare-cov --reporter=text,cobertura --reporter-options='{"cobertura": {"file": "coverage.xml"}}' npm test
+```js
+require('bare-cov')(options)
 ```
 
-### CLI Options
-#### command
-The command to run (e.g. `node`)
+Will start recording coverage until the application ends.
+The coverage report will be generated and displayed in the console.
 
-#### command-args
-Arguments to pass to the command (e.g. `['foo.js']`)
-
+### Options
 #### reporter
 Coverage reporter(s) to use as a comma-separated string (default: `text`)
 
-#### reporter-options
+#### reporterOptions
 Options to pass to each reporter as JSON object string (default: `{}`)
-
-#### reports-dir
-Directory where coverage reports will be saved (default: `./coverage`)
-WARNING: This directory will be deleted before running the command
-
-#### temp-dir
-Directory where raw v8 coverage reports will be saved (default: `./{reportsDir}/tmp`)
 
 *WARNING: This directory will be deleted before running the command unless --skip-cleanup is specified*
 
-#### skip-full
+#### skipFull
 Hide files with 100% coverage (default: `false`)
 
-#### include-relative
+#### includeRelative
 Include scripts with relative paths in coverage report (default: `false`)
 
 #### include
@@ -55,14 +38,11 @@ Specific files and directories that should be excluded from coverage as a JSON a
 #### extension
 Specific file extensions that should be covered as a JSON array string (default: [link](https://github.com/istanbuljs/schema/blob/master/default-extension.js))
 
-#### allow-external
-Allow reporting on files outside of the current working directory
+#### allowExternal
+Allow reporting on files outside of the current working directory (default: `false`)
 
-#### include-node-modules
-Include node_modules folders in the report
-
-#### skip-cleanup
-Skip cleanup of temp directory before running command
+#### includeNodeModules
+Include node_modules folders in the report (default: `false`)
 
 # License
 Apache-2.0
