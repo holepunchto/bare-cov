@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { Session } = require('node:inspector')
 const path = require('path')
 const Module = require('module')
