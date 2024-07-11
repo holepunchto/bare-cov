@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Generate coverage reports using Bare and Node.js",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
