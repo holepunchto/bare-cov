@@ -1,50 +1,51 @@
 #!/usr/bin/env node
 
-const { Session } = require('node:inspector')
-const path = require('path')
-const Module = require('module')
-const { promisify } = require('util')
+const { spawn } = require('child_process')
 const { command } = require('paparam')
+const path = require('path')
+const fs = require('fs')
 const Transformer = require('./lib/transformer')
 const definition = require('./lib/definition')
 
 async function main (args) {
-  const session = new Session()
-  session.connect()
-
-  const sessionPost = promisify(session.post).bind(session)
-
-  await sessionPost('Profiler.enable')
-  await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
-
   if (args.positionals.length < 1) {
     console.error('Script path not specified')
     process.exit(0)
   }
 
-  const script = path.resolve(args.positionals[0])
-  process.argv = [process.argv[0], script, ...args.rest]
-  Module.runMain(script)
+  const tmpDir = path.resolve(args.flags.tempDir ?? './coverage/tmp')
 
-  process.once('beforeExit', async () => {
-    const v8Report = await sessionPost('Profiler.takePreciseCoverage')
+  if (fs.existsSync(tmpDir)) {
+    fs.rmdirSync(tmpDir, { recursive: true })
+  }
 
-    const transformer = new Transformer({
-      includeRelative: args.flags.includeRelative,
-      exclude: args.flags.exclude,
-      reportsDirectory: args.flags.reportsDir,
-      watermarks: args.flags.watermarks,
-      reporters: args.flags.reporter?.split(','),
-      reporterOptions: args.flags.reporterOptions,
-      skipFull: args.flags.skipFull
-    })
-    const coverageMap = await transformer.transformToCoverageMap([v8Report])
-    transformer.report(coverageMap)
-
-    await sessionPost('Profiler.stopPreciseCoverage', {})
-
-    session.disconnect()
+  const child = spawn(args.positionals[0], args.rest, {
+    env: { ...process.env, NODE_V8_COVERAGE: tmpDir },
+    stdio: 'inherit'
   })
+
+  await new Promise((resolve, reject) => {
+    child.on('exit', (exitCode) => {
+      if (exitCode !== 0) process.exit(exitCode)
+      else resolve()
+    })
+    child.on('error', reject)
+  })
+
+  const reports = fs.readdirSync(tmpDir).map(file => path.join(tmpDir, file))
+    .map(file => JSON.parse(fs.readFileSync(file, 'utf8')))
+
+  const transformer = new Transformer({
+    includeRelative: args.flags.includeRelative,
+    exclude: args.flags.exclude,
+    reportsDirectory: args.flags.reportsDir,
+    watermarks: args.flags.watermarks,
+    reporters: args.flags.reporter?.split(','),
+    reporterOptions: args.flags.reporterOptions,
+    skipFull: args.flags.skipFull
+  })
+  const coverageMap = await transformer.transformToCoverageMap(reports)
+  transformer.report(coverageMap)
 }
 
 command('run', ...definition, main).parse(process.argv.slice(2))
