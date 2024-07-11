@@ -26,11 +26,12 @@
   "dependencies": {
     "@bcoe/v8-coverage": "^0.2.3",
     "@istanbuljs/schema": "^0.1.3",
+    "glob": "^11.0.0",
     "istanbul-lib-coverage": "^3.2.2",
     "istanbul-lib-report": "^3.0.1",
     "istanbul-reports": "^3.1.7",
+    "minimatch": "^10.0.1",
     "paparam": "^1.3.3",
-    "test-exclude": "^7.0.1",
     "v8-to-istanbul": "^9.3.0"
   },
   "devDependencies": {
