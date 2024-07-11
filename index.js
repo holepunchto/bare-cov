@@ -25,7 +25,8 @@ async function main (args) {
     process.exit(0)
   }
 
-  const tmpDir = path.resolve(args.flags.tempDir ?? './coverage/tmp')
+  const reportsDir = path.resolve(args.flags.reportsDir ?? 'coverage')
+  const tmpDir = path.resolve(args.flags.tempDir ?? path.resolve(reportsDir, 'tmp'))
 
   if (args.flags.skipCleanup === false && fs.existsSync(tmpDir)) {
     fs.rmdirSync(tmpDir, { recursive: true })
@@ -50,7 +51,7 @@ async function main (args) {
 
   const transformer = new Transformer({
     includeRelative: args.flags.includeRelative,
-    reportsDirectory: args.flags.reportsDir,
+    reportsDirectory: reportsDir,
     watermarks: args.flags.watermarks,
     reporters: args.flags.reporter?.split(','),
     reporterOptions: args.flags.reporterOptions,
