@@ -19,6 +19,7 @@ async function main (args) {
   const exclude = args.flags.exclude && parseOrThrow(args.flags.exclude, 'Exclude option must be valid JSON')
   const include = args.flags.include && parseOrThrow(args.flags.include, 'Include option must be valid JSON')
   const extension = args.flags.extension && parseOrThrow(args.flags.extension, 'Extension must be valid JSON')
+  const reporterOptions = args.flags.reporterOptions && parseOrThrow(args.flags.reporterOptions, 'Reporter options must be valid JSON')
 
   if (args.positionals.length < 1) {
     console.error('Script path not specified')
@@ -54,7 +55,7 @@ async function main (args) {
     reportsDirectory: reportsDir,
     watermarks: args.flags.watermarks,
     reporters: args.flags.reporter?.split(','),
-    reporterOptions: args.flags.reporterOptions,
+    reporterOptions,
     skipFull: args.flags.skipFull,
     exclude,
     include,
