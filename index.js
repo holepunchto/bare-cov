@@ -1,3 +1,5 @@
+'use strict'
+
 const { Session } = require('node:inspector')
 const { promisify } = require('util')
 const fs = require('fs')
