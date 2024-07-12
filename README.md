@@ -43,5 +43,8 @@ Allow reporting on files outside of the current working directory (default: `fal
 #### includeNodeModules
 Include node_modules folders in the report (default: `false`)
 
+#### skipRawDump
+Skip saving of raw v8 coverage data to disk (default: `false`)
+
 # License
 Apache-2.0
