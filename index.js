@@ -22,7 +22,7 @@ module.exports = async function setupCoverage (opts = {}) {
     if (opts.skipRawDump !== true) {
       const dir = opts.dir ?? 'coverage'
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-      fs.writeFileSync(path.join(dir, `v8-coverage-${process.pid}-${new Date().getTime()}.json`), JSON.stringify(v8Report))
+      fs.writeFileSync(path.join(dir, 'v8-coverage.json'), JSON.stringify(v8Report))
     }
 
     const transformer = new Transformer(opts)
