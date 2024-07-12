@@ -20,9 +20,9 @@ module.exports = async function setupCoverage (opts = {}) {
     session.disconnect()
 
     if (opts.skipRawDump !== true) {
-      const reportsDirectory = opts.reportsDirectory ?? 'coverage'
-      if (!fs.existsSync(reportsDirectory)) fs.mkdirSync(reportsDirectory, { recursive: true })
-      fs.writeFileSync(path.join(reportsDirectory, `v8-coverage-${process.pid}-${new Date().getTime()}.json`), JSON.stringify(v8Report))
+      const dir = opts.dir ?? 'coverage'
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+      fs.writeFileSync(path.join(dir, `v8-coverage-${process.pid}-${new Date().getTime()}.json`), JSON.stringify(v8Report))
     }
 
     const transformer = new Transformer(opts)

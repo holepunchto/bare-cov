@@ -19,7 +19,7 @@ Coverage reporter(s) to use (default: `['text', 'json']`)
 #### reporterOptions
 Options to pass to each reporter keyed by reporter (default: `{}`)
 
-#### reportsDirectory
+#### dir
 Directory to write coverage reports to (default: `coverage`)
 
 #### skipFull
