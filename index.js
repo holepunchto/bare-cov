@@ -1,7 +1,6 @@
 'use strict'
 
 const { Session } = require('inspector')
-const { promisify } = require('util')
 const fs = require('fs')
 const path = require('path')
 const Transformer = require('./lib/transformer')
@@ -10,7 +9,9 @@ module.exports = async function setupCoverage (opts = {}) {
   const session = new Session()
   session.connect()
 
-  const sessionPost = promisify(session.post).bind(session)
+  const sessionPost = (...args) => new Promise((resolve, reject) =>
+    session.post(...args, (err, result) => err ? reject(err) : resolve(result))
+  )
 
   await sessionPost('Profiler.enable')
   await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
