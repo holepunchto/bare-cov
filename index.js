@@ -1,6 +1,6 @@
 'use strict'
 
-const { Session } = require('node:inspector')
+const { Session } = require('inspector')
 const { promisify } = require('util')
 const fs = require('fs')
 const path = require('path')
