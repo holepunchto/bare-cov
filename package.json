@@ -1,6 +1,6 @@
 {
   "name": "bare-cov",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate coverage reports using Bare and Node.js",
   "main": "index.js",
   "scripts": {
