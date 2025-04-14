@@ -1,8 +1,9 @@
 'use strict'
 
-const { Session } = require('inspector')
-const fs = require('fs')
-const path = require('path')
+const { isBare } = require('which-runtime')
+const { Session } = require(isBare ? 'bare-inspector' : 'inspector')
+const fs = require(isBare ? 'bare-fs' : 'fs')
+const path = require(isBare ? 'bare-path' : 'path')
 const Transformer = require('./lib/transformer')
 
 module.exports = async function setupCoverage (opts = {}) {
@@ -14,13 +15,13 @@ module.exports = async function setupCoverage (opts = {}) {
   )
 
   await sessionPost('Profiler.enable')
-  await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
+  await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true });
 
-  process.once('beforeExit', async () => {
+  (isBare ? global.Bare : process).once('beforeExit', async () => {
     const dir = opts.dir ?? 'coverage'
 
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
-    session.disconnect()
+    isBare ? session.destroy() : session.disconnect()
 
     if (opts.skipRawDump !== true) {
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
