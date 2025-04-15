@@ -1,0 +1,29 @@
+const { isBare } = require('which-runtime')
+const { spawn } = require(isBare ? 'bare-subprocess' : 'child_process')
+const process = require(isBare ? 'bare-process' : 'process')
+const path = require(isBare ? 'bare-path' : 'path')
+const test = require('brittle')
+
+test('basic', async (t) => {
+  const proc = spawn(process.execPath, ['index.js'], { stdio: 'pipe', cwd: path.join(__dirname, 'fixtures/basic') })
+
+  let output = ''
+  proc.stdout.on('data', (data) => { output += data.toString() })
+
+  await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
+
+  const outputLines = output.trim().split('\n')
+  t.alike(outputLines, [
+    '------------|---------|----------|---------|---------|-------------------',
+    'File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s ',
+    '------------|---------|----------|---------|---------|-------------------',
+    ' All files  |   86.44 |    92.86 |     100 |   86.44 |                   ',
+    '  basic     |   86.44 |    92.86 |     100 |   86.44 |                   ',
+    '   index.js |     100 |      100 |     100 |     100 |                   ',
+    '   test1.js |   68.00 |    75.00 |     100 |   68.00 | 11-18             ',
+    '   test2.js |     100 |      100 |     100 |     100 |                   ',
+    '------------|---------|----------|---------|---------|-------------------'
+  ])
+
+  t.is(proc.exitCode, 0, 'process should exit with code 0')
+})
