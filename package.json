@@ -32,7 +32,7 @@
     "which-runtime": "^1.2.1"
   },
   "devDependencies": {
-    "bare-subprocess": "^4.0.5",
+    "bare-subprocess": "^5.0.3",
     "brittle": "^3.13.1",
     "standard": "^17.1.0"
   },
