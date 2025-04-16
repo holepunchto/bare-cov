@@ -4,7 +4,9 @@
   "description": "Generate coverage reports using Bare and Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "test": "node test/basic.js",
+    "test:bare": "bare test/basic.js",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
