@@ -35,6 +35,7 @@ jobs:
         run: npm i
 
       - name: Install fixture dependencies
+        shell: bash
         run: for dir in test/fixtures/*/; do (cd "$dir" && npm install); done
 
       - name: Lint
