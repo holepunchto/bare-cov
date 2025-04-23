@@ -12,7 +12,7 @@ test('basic', async (t) => {
 
   await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
 
-  const outputLines = output.trim().split('\n')
+  const outputLines = output.trim().split(/\r?\n/)
   t.alike(outputLines, [
     '------------|---------|----------|---------|---------|-------------------',
     'File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s ',
