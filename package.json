@@ -30,7 +30,7 @@
     "bare-path": "^3.0.0",
     "bare-process": "^4.2.1",
     "bare-url": "^2.1.5",
-    "bare-v8-to-istanbul": "github:holepunchto/bare-v8-to-istanbul",
+    "bare-v8-to-istanbul": "v1.0.0",
     "picomatch": "^4.0.2",
     "which-runtime": "^1.2.1"
   },
