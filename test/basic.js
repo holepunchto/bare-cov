@@ -1,7 +1,6 @@
-const { isBare } = require('which-runtime')
-const { spawn } = require(isBare ? 'bare-subprocess' : 'child_process')
-const process = require(isBare ? 'bare-process' : 'process')
-const path = require(isBare ? 'bare-path' : 'path')
+const { spawn } = require('child_process')
+const process = require('process')
+const path = require('path')
 const test = require('brittle')
 const fs = require('fs')
 
