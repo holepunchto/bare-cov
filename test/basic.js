@@ -5,7 +5,7 @@ const test = require('brittle')
 const fs = require('fs')
 
 test('basic', async (t) => {
-  const proc = spawn(process.execPath, ['index.js'], { stdio: 'pipe', cwd: path.join(__dirname, 'fixtures/basic') })
+  const proc = spawn(process.execPath, ['index.js'], { stdio: ['ignore', 'pipe', 'inherit'], cwd: path.join(__dirname, 'fixtures/basic') })
 
   let output = ''
   proc.stdout.on('data', (data) => { output += data.toString() })
@@ -29,7 +29,7 @@ test('basic', async (t) => {
 })
 
 test('basic with duplicate', async (t) => {
-  const proc = spawn(process.execPath, ['index.js'], { stdio: 'pipe', cwd: path.join(__dirname, 'fixtures/duplicated') })
+  const proc = spawn(process.execPath, ['index.js'], { stdio: ['ignore', 'pipe', 'inherit'], cwd: path.join(__dirname, 'fixtures/duplicated') })
 
   let output = ''
   proc.stdout.on('data', (data) => { output += data.toString() })
