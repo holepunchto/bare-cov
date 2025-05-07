@@ -36,7 +36,7 @@ test('basic with duplicate', async (t) => {
 
   await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
 
-  const v8Coverage = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/duplicated/coverage/v8-coverage.json'), 'utf8'))
+  const v8Coverage = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'duplicated', 'coverage', 'v8-coverage.json'), 'utf8'))
   const test1Coverages = v8Coverage.result.filter(result => result.url.endsWith('test1.js'))
   t.is(test1Coverages.length, 3, 'should have three test1.js coverage results')
 
