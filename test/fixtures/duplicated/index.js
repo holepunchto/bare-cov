@@ -1,9 +1,13 @@
 const setupCoverage = require('bare-cov')
 const fs = require('fs')
+const { pathToFileURL } = require('url')
 
 setupCoverage().then(async () => {
-  const code = fs.readFileSync(`${__dirname}/test1.js`, 'utf8')
-  eval(`${code} //# sourceURL=file://${__dirname}/test1.js`)
-  eval(`${code.replace('12345', '"123456"')} //# sourceURL=file://${__dirname}/test1.js`)
-  eval(`${code.replace('12345', '"1"')} //# sourceURL=file://${__dirname}/test1.js`)
+  const codePath = require.resolve('./test1.js')
+  const code = fs.readFileSync(codePath, 'utf8')
+  const url = pathToFileURL(codePath).href
+  /* eslint-disable no-eval */
+  eval(`${code} //# sourceURL=${url}`)
+  eval(`${code.replace('12345', '"123456"')} //# sourceURL=${url}`)
+  eval(`${code.replace('12345', '"1"')} //# sourceURL=${url}`)
 })
