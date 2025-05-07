@@ -1,0 +1,7 @@
+{
+  "name": "basic-test",
+  "main": "index.js",
+  "dependencies": {
+    "bare-cov": "file:../../.."
+  }
+}
