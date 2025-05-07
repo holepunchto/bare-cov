@@ -5,6 +5,7 @@ const { Session } = require('inspector')
 const fs = require('fs')
 const path = require('path')
 const Transformer = require('./lib/transformer')
+const process = require('process')
 
 module.exports = async function setupCoverage (opts = {}) {
   const session = new Session()
