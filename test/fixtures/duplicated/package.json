@@ -1,0 +1,7 @@
+{
+  "name": "duplicated-test",
+  "main": "index.js",
+  "dependencies": {
+    "bare-cov": "file:../../.."
+  }
+}
