@@ -51,6 +51,7 @@
     "bare-process": "^4.2.1",
     "bare-url": "^2.1.5",
     "bare-v8-to-istanbul": "v1.0.0",
+    "paparam": "^1.8.3",
     "picomatch": "^4.0.2",
     "which-runtime": "^1.2.1"
   },
