@@ -17,9 +17,9 @@ async function processCoverage (opts) {
   }
 
   const transformer = new Transformer(opts)
-  const coverageMap = await transformer.transformToCoverageMap(v8Report)
-  fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(coverageMap))
-  transformer.report(coverageMap)
+  await transformer.add(v8Report)
+  fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(transformer.coverages))
+  transformer.report()
 }
 
 async function run () {
@@ -53,7 +53,7 @@ async function run () {
     try {
       await processCoverage({ dir: covDir })
     } catch (error) {
-      console.error(`Error processing coverage: ${error.message}`)
+      console.error('Error processing coverage', error)
       process.exit(1)
     }
   })
