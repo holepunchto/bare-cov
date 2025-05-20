@@ -9,17 +9,20 @@ const { spawn } = require('child_process')
 
 async function processCoverage (opts) {
   const dir = opts.dir ?? 'coverage'
-  let v8Report
-  try {
-    v8Report = JSON.parse(fs.readFileSync(path.join(dir, 'v8-coverage.json'), 'utf8'))
-  } catch (error) {
-    throw new Error('Failed to read v8-coverage.json: ' + error.message)
-  }
 
   if (!fs.existsSync(dir)) throw new Error(`Coverage directory does not exist: ${dir}`)
 
   const transformer = new Transformer(opts)
-  await transformer.add(v8Report)
+  const files = fs.readdirSync(dir).filter(file => file.endsWith('.json'))
+  for (const file of files) {
+    const rawContents = fs.readFileSync(path.join(dir, file), 'utf8')
+    let v8Report
+    try { v8Report = JSON.parse(rawContents) } catch (e) { continue }
+    if (!Array.isArray(v8Report.result)) continue
+
+    await transformer.add(v8Report)
+  }
+
   fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(transformer.coverages))
   transformer.report()
 }
