@@ -16,6 +16,8 @@ async function processCoverage (opts) {
     throw new Error('Failed to read v8-coverage.json: ' + error.message)
   }
 
+  if (!fs.existsSync(dir)) throw new Error(`Coverage directory does not exist: ${dir}`)
+
   const transformer = new Transformer(opts)
   await transformer.add(v8Report)
   fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(transformer.coverages))
