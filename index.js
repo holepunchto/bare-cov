@@ -30,8 +30,8 @@ module.exports = async function setupCoverage (opts = {}) {
     }
 
     const transformer = new Transformer(opts)
-    const coverageMap = await transformer.transformToCoverageMap(v8Report)
-    fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(coverageMap))
-    transformer.report(coverageMap)
+    await transformer.add(v8Report)
+    fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(transformer.coverages))
+    transformer.report()
   })
 }
