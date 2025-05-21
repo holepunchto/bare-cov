@@ -65,6 +65,7 @@
   },
   "files": [
     "index.js",
+    "cmd.js",
     "lib"
   ]
 }
