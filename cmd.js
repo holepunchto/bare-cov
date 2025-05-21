@@ -47,7 +47,7 @@ async function run () {
   }
 
   const args = cmd.rest.slice(1)
-  const opts = { stdio: 'inherit', env: { ...process.env, BARE_V8_COVERAGE: covDir } }
+  const opts = { stdio: 'inherit', env: { ...process.env, BARE_V8_COVERAGE: covDir, NODE_V8_COVERAGE: covDir } }
   const child = spawn(commandArg, args, opts)
   child.on('error', (error) => {
     console.error(`Error executing command: ${error.message}`)
