@@ -30,6 +30,7 @@ async function processCoverage (opts) {
 async function run () {
   const cmd = command('bcov',
     flag('--cov-dir <dir>', 'Configure coverage output directory (default: ./coverage)'),
+    flag('--no-clean', 'Do not clean up the coverage directory'),
     rest('<command>', 'The command to run')
   ).parse(process.argv.slice(2))
 
@@ -39,6 +40,10 @@ async function run () {
   if (!commandArg) {
     console.error('No command provided')
     process.exit(1)
+  }
+
+  if (cmd?.flags?.clean) {
+    fs.rmSync(covDir, { recursive: true, force: true })
   }
 
   const args = cmd.rest.slice(1)
