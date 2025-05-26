@@ -9,6 +9,7 @@ async function runTests () {
 
   await import('./basic.js')
   await import('./merge.js')
+  await import('./cmd.js')
 
   test.resume()
 }
