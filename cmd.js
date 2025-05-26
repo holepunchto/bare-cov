@@ -34,7 +34,7 @@ async function run () {
     rest('<command>', 'The command to run')
   ).parse(process.argv.slice(2))
 
-  const covDir = cmd?.flags?.['cov-dir'] || './coverage'
+  const covDir = cmd?.flags?.covDir || './coverage'
   const commandArg = cmd?.rest?.[0]
 
   if (!commandArg) {
