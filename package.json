@@ -3,6 +3,11 @@
   "version": "1.1.1",
   "description": "Generate coverage reports using Bare and Node.js",
   "main": "index.js",
+  "bin": {
+    "bcov": "bin/node.js",
+    "bcov-node": "bin/node.js",
+    "bcov-bare": "bin/bare.js"
+  },
   "scripts": {
     "test": "node test",
     "test:bare": "bare test",
@@ -42,6 +47,9 @@
     },
     "child_process": {
       "bare": "bare-subprocess"
+    },
+    "os": {
+      "bare": "bare-os"
     }
   },
   "dependencies": {
@@ -51,16 +59,20 @@
     "bare-process": "^4.2.1",
     "bare-url": "^2.1.5",
     "bare-v8-to-istanbul": "v1.0.0",
+    "paparam": "^1.8.3",
     "picomatch": "^4.0.2",
     "which-runtime": "^1.2.1"
   },
   "devDependencies": {
+    "bare-os": "^3.6.1",
     "bare-subprocess": "^5.0.3",
     "brittle": "^3.13.1",
     "standard": "^17.1.2"
   },
   "files": [
     "index.js",
-    "lib"
+    "cmd.js",
+    "lib",
+    "bin"
   ]
 }
