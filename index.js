@@ -8,6 +8,7 @@ const Transformer = require('./lib/transformer')
 const process = require('process')
 
 module.exports = async function setupCoverage (opts = {}) {
+  const dir = path.resolve(opts.dir ?? 'coverage')
   const session = new Session()
   session.connect()
 
@@ -19,8 +20,6 @@ module.exports = async function setupCoverage (opts = {}) {
   await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
 
   process.once('beforeExit', async () => {
-    const dir = opts.dir ?? 'coverage'
-
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
     isBare ? session.destroy() : session.disconnect()
 
