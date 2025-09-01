@@ -1,0 +1,17 @@
+{
+  "name": "basic-test",
+  "main": "index.js",
+  "dependencies": {
+    "bare-cov": "file:../../..",
+    "bare-path": "^3.0.0",
+    "bare-process": "^4.2.1"
+  },
+  "imports": {
+    "process": {
+      "bare": "bare-process"
+    },
+    "path": {
+      "bare": "bare-path"
+    }
+  }
+}
