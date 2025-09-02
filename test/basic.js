@@ -54,3 +54,26 @@ test('basic with duplicate', async (t) => {
 
   t.is(proc.exitCode, 0, 'process should exit with code 0')
 })
+
+test('should correctly handle chdir in tests', async (t) => {
+  const proc = spawn(process.execPath, ['index.js'], { stdio: ['ignore', 'pipe', 'inherit'], cwd: path.join(__dirname, 'fixtures/chdir') })
+
+  let output = ''
+  proc.stdout.on('data', (data) => { output += data.toString() })
+
+  await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
+
+  const outputLines = output.trim().split(/\r?\n/)
+  t.alike(outputLines, [
+    '------------|---------|----------|---------|---------|-------------------',
+    'File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s ',
+    '------------|---------|----------|---------|---------|-------------------',
+    ' All files  |   76.47 |    80.00 |     100 |   76.47 |                   ',
+    '  chdir     |   76.47 |    80.00 |     100 |   76.47 |                   ',
+    '   index.js |     100 |      100 |     100 |     100 |                   ',
+    '   test1.js |   68.00 |    75.00 |     100 |   68.00 | 11-18             ',
+    '------------|---------|----------|---------|---------|-------------------'
+  ])
+
+  t.is(proc.exitCode, 0, 'process should exit with code 0')
+})
