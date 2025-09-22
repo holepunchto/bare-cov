@@ -13,18 +13,12 @@ module.exports = async function setupCoverage (opts = {}) {
   const session = new Session()
   session.connect()
 
-  const sessionPost = (...args) =>
-    new Promise((resolve, reject) =>
-      session.post(...args, (err, result) =>
-        err ? reject(err) : resolve(result)
-      )
-    )
+  const sessionPost = (...args) => new Promise((resolve, reject) =>
+    session.post(...args, (err, result) => err ? reject(err) : resolve(result))
+  )
 
   await sessionPost('Profiler.enable')
-  await sessionPost('Profiler.startPreciseCoverage', {
-    callCount: true,
-    detailed: true
-  })
+  await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
 
   process.once('beforeExit', async () => {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
@@ -32,23 +26,15 @@ module.exports = async function setupCoverage (opts = {}) {
 
     if (opts.skipRawDump !== true) {
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-      fs.writeFileSync(
-        path.join(dir, 'v8-coverage.json'),
-        JSON.stringify(v8Report)
-      )
+      fs.writeFileSync(path.join(dir, 'v8-coverage.json'), JSON.stringify(v8Report))
     }
 
-    const reporters = Array.isArray(opts.reporters)
-      ? opts.reporters
-      : ['json', 'text']
+    const reporters = Array.isArray(opts.reporters) ? opts.reporters : ['text', 'json']
 
     const transformer = new Transformer({ ...opts, cwd })
     const coverageMap = await transformer.transformToCoverageMap(v8Report)
     if (reporters.includes('json')) {
-      fs.writeFileSync(
-        path.join(dir, 'coverage-final.json'),
-        JSON.stringify(coverageMap)
-      )
+      fs.writeFileSync(path.join(dir, 'coverage-final.json'), JSON.stringify(coverageMap))
     }
     if (reporters.includes('text')) transformer.report(coverageMap)
   })
