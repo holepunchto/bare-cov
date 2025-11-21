@@ -1,4 +1,4 @@
-function calculateDiscount (price, quantity) {
+function calculateDiscount(price, quantity) {
   let discount = 0
 
   if (typeof price !== 'number' || typeof quantity !== 'number' || price < 0 || quantity < 0) {
@@ -6,7 +6,7 @@ function calculateDiscount (price, quantity) {
   }
 
   if (quantity > 10) {
-    discount = 0.10
+    discount = 0.1
   } else if (price > 100) {
     discount = 0.05
   }

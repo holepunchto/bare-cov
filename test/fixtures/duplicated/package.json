@@ -2,6 +2,16 @@
   "name": "duplicated-test",
   "main": "index.js",
   "dependencies": {
-    "bare-cov": "file:../../.."
+    "bare-cov": "file:../../..",
+    "bare-fs": "^4.5.1",
+    "bare-url": "^2.3.2"
+  },
+  "imports": {
+    "fs": {
+      "bare": "bare-fs"
+    },
+    "url": {
+      "bare": "bare-url"
+    }
   }
 }

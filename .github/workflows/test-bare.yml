@@ -2,9 +2,9 @@ name: Test with Bare
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
@@ -38,8 +38,8 @@ jobs:
         shell: bash
         run: for dir in test/fixtures/*/; do (cd "$dir" && npm install); done
 
-      - name: Lint
-        run: npm run lint
+      - name: Check format
+        run: npm run format:check
 
       - name: Run tests
         run: npm run test:bare

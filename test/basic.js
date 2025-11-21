@@ -5,12 +5,21 @@ const test = require('brittle')
 const fs = require('fs')
 
 test('basic', async (t) => {
-  const proc = spawn(process.execPath, ['index.js'], { stdio: ['ignore', 'pipe', 'inherit'], cwd: path.join(__dirname, 'fixtures/basic') })
+  const proc = spawn(process.execPath, ['index.js'], {
+    stdio: ['ignore', 'pipe', 'inherit'],
+    cwd: path.join(__dirname, 'fixtures/basic')
+  })
 
   let output = ''
-  proc.stdout.on('data', (data) => { output += data.toString() })
+  proc.stdout.on('data', (data) => {
+    output += data.toString()
+  })
 
-  await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
+  await new Promise((resolve) => {
+    proc.on('exit', () => {
+      resolve()
+    })
+  })
 
   const outputLines = output.trim().split(/\r?\n/)
   t.alike(outputLines, [
@@ -29,15 +38,29 @@ test('basic', async (t) => {
 })
 
 test('basic with duplicate', async (t) => {
-  const proc = spawn(process.execPath, ['index.js'], { stdio: ['ignore', 'pipe', 'inherit'], cwd: path.join(__dirname, 'fixtures/duplicated') })
+  const proc = spawn(process.execPath, ['index.js'], {
+    stdio: ['ignore', 'pipe', 'inherit'],
+    cwd: path.join(__dirname, 'fixtures/duplicated')
+  })
 
   let output = ''
-  proc.stdout.on('data', (data) => { output += data.toString() })
+  proc.stdout.on('data', (data) => {
+    output += data.toString()
+  })
 
-  await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
+  await new Promise((resolve) => {
+    proc.on('exit', () => {
+      resolve()
+    })
+  })
 
-  const v8Coverage = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'duplicated', 'coverage', 'v8-coverage.json'), 'utf8'))
-  const test1Coverages = v8Coverage.result.filter(result => result.url.endsWith('test1.js'))
+  const v8Coverage = JSON.parse(
+    fs.readFileSync(
+      path.join(__dirname, 'fixtures', 'duplicated', 'coverage', 'v8-coverage.json'),
+      'utf8'
+    )
+  )
+  const test1Coverages = v8Coverage.result.filter((result) => result.url.endsWith('test1.js'))
   t.is(test1Coverages.length, 3, 'should have three test1.js coverage results')
 
   const outputLines = output.trim().split(/\r?\n/)
@@ -56,12 +79,21 @@ test('basic with duplicate', async (t) => {
 })
 
 test('should correctly handle chdir in tests', async (t) => {
-  const proc = spawn(process.execPath, ['index.js'], { stdio: ['ignore', 'pipe', 'inherit'], cwd: path.join(__dirname, 'fixtures/chdir') })
+  const proc = spawn(process.execPath, ['index.js'], {
+    stdio: ['ignore', 'pipe', 'inherit'],
+    cwd: path.join(__dirname, 'fixtures/chdir')
+  })
 
   let output = ''
-  proc.stdout.on('data', (data) => { output += data.toString() })
+  proc.stdout.on('data', (data) => {
+    output += data.toString()
+  })
 
-  await new Promise((resolve) => { proc.on('exit', () => { resolve() }) })
+  await new Promise((resolve) => {
+    proc.on('exit', () => {
+      resolve()
+    })
+  })
 
   const outputLines = output.trim().split(/\r?\n/)
   t.alike(outputLines, [
