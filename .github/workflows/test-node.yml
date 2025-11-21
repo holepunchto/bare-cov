@@ -35,8 +35,8 @@ jobs:
         shell: bash
         run: for dir in test/fixtures/*/; do (cd "$dir" && npm install); done
 
-      - name: Lint
-        run: npm run lint
+      - name: Check format
+        run: npm run format:check
 
       - name: Run tests
         run: npm test
