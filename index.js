@@ -7,18 +7,22 @@ const path = require('path')
 const Transformer = require('./lib/transformer')
 const process = require('process')
 
-module.exports = async function setupCoverage (opts = {}) {
+module.exports = async function setupCoverage(opts = {}) {
   const cwd = process.cwd()
   const dir = path.resolve(opts.dir ?? 'coverage')
   const session = new Session()
   session.connect()
 
-  const sessionPost = (...args) => new Promise((resolve, reject) =>
-    session.post(...args, (err, result) => err ? reject(err) : resolve(result))
-  )
+  const sessionPost = (...args) =>
+    new Promise((resolve, reject) =>
+      session.post(...args, (err, result) => (err ? reject(err) : resolve(result)))
+    )
 
   await sessionPost('Profiler.enable')
-  await sessionPost('Profiler.startPreciseCoverage', { callCount: true, detailed: true })
+  await sessionPost('Profiler.startPreciseCoverage', {
+    callCount: true,
+    detailed: true
+  })
 
   process.once('beforeExit', async () => {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')

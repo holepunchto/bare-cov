@@ -1,4 +1,4 @@
-function processInput (value) {
+function processInput(value) {
   let result
 
   if (typeof value === 'number') {
