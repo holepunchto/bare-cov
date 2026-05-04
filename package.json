@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "bare-fs": "^4.1.2",
-    "bare-inspector": "^4.0.1",
+    "bare-inspector": "^6.0.1",
     "bare-path": "^3.0.0",
     "bare-process": "^4.2.1",
     "bare-url": "^2.1.5",
@@ -56,7 +56,7 @@
     "which-runtime": "^1.2.1"
   },
   "devDependencies": {
-    "bare-subprocess": "^5.0.3",
+    "bare-subprocess": "^6.0.0",
     "brittle": "^3.13.1",
     "prettier": "^3.6.2",
     "prettier-config-holepunch": "^2.0.0"
