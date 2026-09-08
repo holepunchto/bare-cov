@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node test",
     "test:bare": "bare test",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write . && lunte --fix",
+    "lint": "prettier --check . && lunte"
   },
   "repository": {
     "type": "git",
