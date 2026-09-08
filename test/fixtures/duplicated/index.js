@@ -2,7 +2,7 @@ const setupCoverage = require('bare-cov')
 const fs = require('fs')
 const { pathToFileURL } = require('url')
 
-setupCoverage().then(async () => {
+setupCoverage().then(() => {
   const codePath = require.resolve('./test1.js')
   const code = fs.readFileSync(codePath, 'utf8')
   const url = pathToFileURL(codePath).href
