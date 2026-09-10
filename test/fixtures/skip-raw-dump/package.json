@@ -1,0 +1,7 @@
+{
+  "name": "skip-raw-dump-test",
+  "main": "index.js",
+  "dependencies": {
+    "bare-cov": "file:../../.."
+  }
+}

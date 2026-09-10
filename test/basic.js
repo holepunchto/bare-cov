@@ -109,3 +109,25 @@ test('should correctly handle chdir in tests', async (t) => {
 
   t.is(proc.exitCode, 0, 'process should exit with code 0')
 })
+
+test('json reporter without the raw dump', async (t) => {
+  const cwd = path.join(__dirname, 'fixtures/skip-raw-dump')
+  fs.rmSync(path.join(cwd, 'coverage'), { recursive: true, force: true })
+
+  const proc = spawn(process.execPath, ['index.js'], {
+    stdio: ['ignore', 'pipe', 'inherit'],
+    cwd
+  })
+
+  await new Promise((resolve) => {
+    proc.on('exit', () => {
+      resolve()
+    })
+  })
+
+  t.is(proc.exitCode, 0, 'process should exit with code 0')
+  t.ok(
+    fs.existsSync(path.join(cwd, 'coverage', 'coverage-final.json')),
+    'writes coverage-final.json'
+  )
+})

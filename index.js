@@ -28,12 +28,14 @@ module.exports = async function setupCoverage(opts = {}) {
     const v8Report = await sessionPost('Profiler.takePreciseCoverage')
     isBare ? session.destroy() : session.disconnect()
 
+    const reporters = Array.isArray(opts.reporters) ? opts.reporters : ['text', 'json']
+
+    const writesToDir = opts.skipRawDump !== true || reporters.includes('json')
+    if (writesToDir && !fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+
     if (opts.skipRawDump !== true) {
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
       fs.writeFileSync(path.join(dir, 'v8-coverage.json'), JSON.stringify(v8Report))
     }
-
-    const reporters = Array.isArray(opts.reporters) ? opts.reporters : ['text', 'json']
 
     const transformer = new Transformer({ ...opts, cwd })
     const coverageMap = await transformer.transformToCoverageMap(v8Report)
