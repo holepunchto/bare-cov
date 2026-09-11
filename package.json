@@ -52,13 +52,13 @@
     "bare-path": "^3.1.2",
     "bare-process": "^4.5.1",
     "bare-url": "^2.5.4",
-    "bare-v8-to-istanbul": "^1.0.2",
+    "bare-v8-to-istanbul": "^1.0.4",
     "picomatch": "^4.0.7",
     "which-runtime": "^1.4.0"
   },
   "devDependencies": {
     "bare-subprocess": "^6.1.0",
-    "brittle": "^4.1.1",
+    "brittle": "^4.2.0",
     "lunte": "^1.8.4",
     "prettier": "^3.9.6",
     "prettier-config-holepunch": "^2.0.0"
